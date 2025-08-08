@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Resume Builder - Create Professional Resumes Online | AI Resume Builder</title>
+    <meta name="description" content="Create professional resumes with our free resume builder. Choose from 4+ templates, customize online, and download instantly. Best free resume builder tool available.">
+    <meta name="keywords" content="free resume builder, online resume maker, resume creator, professional resume templates, CV builder, resume generator, job application">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="AI Resume Builder">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Free Resume Builder - Create Professional Resumes Online">
+    <meta property="og:description" content="Build stunning resumes with our free online resume builder. Multiple templates, instant download, no registration required.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Resume Builder - Create Professional Resumes Online">
+    <meta name="twitter:description" content="Build stunning resumes with our free online resume builder. Multiple templates, instant download, no registration required.">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://your-domain.com">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Free Resume Builder",
+        "description": "Professional free resume builder with multiple templates",
+        "url": "https://your-domain.com",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Header with Navigation -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-bold text-blue-600">Free Resume Builder</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="https://sarakarihub.com/" target="_blank" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="about.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <a href="contact.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                        <a href="complete-resume-builder.html" class="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium">Build Resume</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button type="button" id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200 transition-all duration-300">
+                <div class="px-4 py-3 space-y-2">
+                    <a href="https://sarakarihub.com/" target="_blank" class="block text-gray-700 hover:text-blue-600 hover:bg-gray-50 py-2 px-2 rounded-md">Home</a>
+                    <a href="about.html" class="block text-gray-700 hover:text-blue-600 hover:bg-gray-50 py-2 px-2 rounded-md">About</a>
+                    <a href="contact.html" class="block text-gray-700 hover:text-blue-600 hover:bg-gray-50 py-2 px-2 rounded-md">Contact</a>
+                    <a href="complete-resume-builder.html" class="block bg-blue-600 text-white text-center px-4 py-2 rounded-md font-medium hover:bg-blue-700">Build Resume</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
+            <!-- Ad Banner Top -->
+            <div class="mb-6 sm:mb-8 text-center">
+                <div class="ad-banner bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 mb-6 sm:mb-8">
+                    <p class="text-orange-300 text-xs sm:text-sm font-medium">Advertisement - 728 × 90 (Leaderboard)</p>
+                    <div class="bg-white/20 rounded h-16 sm:h-20 flex items-center justify-center flex-col">
+                        <span class="text-orange-400 text-sm font-semibold">Place your ads code here</span>
+                        <span class="text-orange-300 text-xs mt-1">728 × 90 pixels</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+                    Create Your Perfect Resume with Our <span class="text-yellow-300">Free Resume Builder</span>
+                </h1>
+                <p class="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 text-blue-100 max-w-4xl mx-auto leading-relaxed">
+                    Build professional resumes in minutes. Choose from beautiful templates, customize easily, and download instantly.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center max-w-md sm:max-w-none mx-auto">
+                    <a href="#templates" class="w-full sm:w-auto bg-white text-blue-600 hover:bg-gray-100 px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition duration-300">
+                        Choose Template
+                    </a>
+                    <a href="complete-resume-builder.html" class="w-full sm:w-auto border-2 border-white text-white hover:bg-white hover:text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition duration-300">
+                        Start Building
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Why Choose Our Free Resume Builder?
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Create professional resumes that get you hired
+                </p>
+            </div>
+
+            <!-- Ad Banner Middle -->
+            <div class="mb-12">
+                <div class="ad-banner bg-gray-100 rounded-lg p-4 text-center">
+                    <p class="text-orange-500 text-sm mb-2 font-medium">Advertisement - 300 × 250 (Medium Rectangle)</p>
+                    <div class="bg-gray-200 rounded h-24 flex items-center justify-center flex-col">
+                        <span class="text-orange-600 text-sm font-semibold">Place your ads code here</span>
+                        <span class="text-orange-500 text-xs mt-1">300 × 250 pixels</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-magic text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">AI-Powered</h3>
+                    <p class="text-gray-600">Smart suggestions and formatting to make your resume stand out</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-download text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Instant Download</h3>
+                    <p class="text-gray-600">Download your resume as PDF or image format instantly</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-palette text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Beautiful Templates</h3>
+                    <p class="text-gray-600">Choose from professional templates designed by experts</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    How Our Free Resume Builder Works
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Simple 3-step process to create your perfect resume
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
+                    <h3 class="text-xl font-semibold mb-2">Fill Your Information</h3>
+                    <p class="text-gray-600">Enter your personal details, experience, and skills in our simple form</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
+                    <h3 class="text-xl font-semibold mb-2">Fill Information</h3>
+                    <p class="text-gray-600">Add your personal details, experience, and skills</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
+                    <h3 class="text-xl font-semibold mb-2">Download Resume</h3>
+                    <p class="text-gray-600">Export and download your professional resume instantly</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="complete-resume-builder.html" class="bg-blue-600 text-white hover:bg-blue-700 px-8 py-4 rounded-lg text-lg font-semibold transition duration-300">
+                    Start Building Your Free Resume
+                </a>
+            </div>
+
+            <!-- Ad Banner Bottom -->
+            <div class="mt-16">
+                <div class="ad-banner bg-white rounded-lg p-4 text-center shadow-sm">
+                    <p class="text-orange-500 text-sm mb-2 font-medium">Advertisement</p>
+                    <div class="bg-gray-100 rounded h-24 flex items-center justify-center">
+                        <span class="text-orange-600 text-sm font-semibold">Place your ads here</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Template Showcase Section -->
+    <section id="templates" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Choose Your Professional Template
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Modern, ATS-friendly designs with AI-powered features and full customization
+                </p>
+            </div>
+
+            <!-- Template Selection Grid -->
+            <div class="flex justify-center mb-16">
+                
+                <!-- Template 1: Clean Professional -->
+                <div class="template-card bg-white rounded-xl shadow-lg border-2 border-gray-200 hover:border-blue-500 transition-all duration-300 overflow-hidden max-w-lg">
+                    <div class="relative">
+                        <img src="attached_assets/resume-light-theme (3)_1751362239363.png" 
+                             alt="Clean Professional Template" 
+                             class="w-full h-[500px] object-contain bg-gray-50 p-4">
+                        <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                            AI Powered
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Clean Professional</h3>
+                        <p class="text-gray-600 mb-4">Modern, minimalist design perfect for all industries. Features clean typography and excellent readability.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2 text-sm text-gray-500">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>ATS Friendly</span>
+                            </div>
+                            <button onclick="window.location.href='complete-resume-builder.html'" 
+                                    class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                                Use Template
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Feature Instructions Section -->
+            <div class="max-w-4xl mx-auto mt-16">
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-4">Professional Resume Builder Features</h3>
+                    <p class="text-lg text-gray-600 mb-8">Create stunning resumes with our advanced editing and customization tools</p>
+                    
+                    <!-- Core Features -->
+                    <div class="mb-10">
+                        <h4 class="text-xl font-semibold text-gray-900 mb-6 text-center">🎯 Core Editing Features</h4>
+                        <div class="grid md:grid-cols-2 gap-6 text-left max-w-4xl mx-auto">
+                            <div class="flex items-start">
+                                <i class="fas fa-edit text-blue-500 mr-3 mt-1"></i>
+                                <div>
+                                    <h5 class="font-semibold text-gray-900">Direct Inline Editing</h5>
+                                    <p class="text-gray-600">Click anywhere on the resume to edit content directly</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-arrows-alt text-green-500 mr-3 mt-1"></i>
+                                <div>
+                                    <h5 class="font-semibold text-gray-900">Movable Sections</h5>
+                                    <p class="text-gray-600">Drag and reorder all sections from Professional Summary to Declaration</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-plus-circle text-orange-500 mr-3 mt-1"></i>
+                                <div>
+                                    <h5 class="font-semibold text-gray-900">Add/Remove Sections</h5>
+                                    <p class="text-gray-600">Customize your resume by adding or removing any section</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-cog text-purple-500 mr-3 mt-1"></i>
+                                <div>
+                                    <h5 class="font-semibold text-gray-900">Section Adjustments</h5>
+                                    <p class="text-gray-600">Resize, modify, and customize each section to your needs</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section Features -->
+                    <div class="mb-10">
+                        <h4 class="text-xl font-semibold text-gray-900 mb-6 text-center">📋 Resume Sections (All Adjustable)</h4>
+                        <div class="grid md:grid-cols-3 gap-4 text-left max-w-5xl mx-auto">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-blue-900 mb-2">📝 Professional Summary</h5>
+                                <p class="text-blue-700 text-sm">Movable & editable career overview section</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-green-900 mb-2">💼 Professional Experience</h5>
+                                <p class="text-green-700 text-sm">Adjustable work history with achievements</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-purple-900 mb-2">🎓 Education</h5>
+                                <p class="text-purple-700 text-sm">Flexible education section positioning</p>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-orange-900 mb-2">⚡ Skills</h5>
+                                <p class="text-orange-700 text-sm">Movable skills with tag formatting</p>
+                            </div>
+                            <div class="bg-indigo-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-indigo-900 mb-2">🏆 Certifications</h5>
+                                <p class="text-indigo-700 text-sm">Adjustable certification display</p>
+                            </div>
+                            <div class="bg-teal-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-teal-900 mb-2">📋 Additional Information</h5>
+                                <p class="text-teal-700 text-sm">Flexible additional details section</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg md:col-span-3">
+                                <h5 class="font-semibold text-gray-900 mb-2">✍️ Declaration</h5>
+                                <p class="text-gray-700 text-sm">Movable declaration section for professional statements</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technical Features -->
+                    <div class="mb-8">
+                        <h4 class="text-xl font-semibold text-gray-900 mb-6 text-center">⚙️ Technical Features</h4>
+                        <div class="grid md:grid-cols-2 gap-6 text-left max-w-4xl mx-auto">
+                            <div class="flex items-start">
+                                <i class="fas fa-palette text-blue-500 mr-3 mt-1"></i>
+                                <div>
+                                    <h5 class="font-semibold text-gray-900">Light & Dark Themes</h5>
+                                    <p class="text-gray-600">Switch between professional theme options instantly</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-download text-purple-500 mr-3 mt-1"></i>
+                                <div>
+                                    <h5 class="font-semibold text-gray-900">Multiple Export Formats</h5>
+                                    <p class="text-gray-600">Download as high-quality PDF or PNG image</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-camera text-green-500 mr-3 mt-1"></i>
+                                <div>
+                                    <h5 class="font-semibold text-gray-900">Photo Upload</h5>
+                                    <p class="text-gray-600">Click profile area to upload professional headshot</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-mobile-alt text-indigo-500 mr-3 mt-1"></i>
+                                <div>
+                                    <h5 class="font-semibold text-gray-900">A4 Perfect Formatting</h5>
+                                    <p class="text-gray-600">Optimized for printing and digital sharing</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-save text-yellow-500 mr-3 mt-1"></i>
+                                <div>
+                                    <h5 class="font-semibold text-gray-900">Auto-Save</h5>
+                                    <p class="text-gray-600">Your work is automatically saved as you type</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-responsive text-red-500 mr-3 mt-1"></i>
+                                <div>
+                                    <h5 class="font-semibold text-gray-900">Responsive Design</h5>
+                                    <p class="text-gray-600">Works perfectly on desktop, tablet, and mobile</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <!-- Simple Resume Builder Section -->
+    <section id="resume-builder" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Start Building Your Professional Resume
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Simple, clean format optimized for professional use
+                </p>
+            </div>
+
+            <!-- Ad Space - Rectangle (300x250) -->
+            <div class="ad-container mb-12 flex justify-center">
+                <div class="ad-rectangle">
+                    <div class="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-4 text-center w-80 h-64">
+                        <span class="text-sm text-orange-500 font-medium">Advertisement</span>
+                        <div class="h-full flex items-center justify-center">
+                            <span class="text-sm text-orange-600 font-semibold">Place your ads here</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                    <div class="mb-6">
+                        <i class="fas fa-file-alt text-5xl text-blue-600 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Professional Resume Format</h3>
+                        <p class="text-gray-600">Clean, ATS-friendly design that gets results</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-sm">
+                        <div class="flex items-center justify-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>A4 Optimized</span>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>PDF Export</span>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Mobile Friendly</span>
+                        </div>
+                    </div>
+                    <a href="complete-resume-builder.html" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-lg">
+                        Create Your Resume Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="py-20 bg-blue-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                Ready to Build Your Professional Resume?
+            </h2>
+            <p class="text-xl mb-8 opacity-90">
+                Join thousands of job seekers who have successfully created their resumes with our free builder
+            </p>
+            
+            <!-- Ad Space - Wide Banner -->
+            <div class="ad-container mb-8">
+                <div class="ad-banner mx-auto">
+                    <div class="bg-white bg-opacity-20 border-2 border-dashed border-white border-opacity-30 rounded-lg p-4 text-center">
+                        <span class="text-sm text-orange-300 font-medium">Advertisement</span>
+                        <div class="h-20 md:h-16 flex items-center justify-center">
+                            <span class="text-sm text-orange-400 font-semibold">Place your ads here</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="complete-resume-builder.html" class="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition duration-300">
+                Get Started Free Now
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <!-- Footer Banner Ad -->
+        <div class="border-b border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <div class="ad-banner bg-gray-800 rounded-lg p-4 text-center">
+                    <p class="text-orange-400 text-sm mb-2 font-medium">Advertisement - 728 × 90 (Leaderboard)</p>
+                    <div class="bg-gray-700 rounded h-24 flex items-center justify-center flex-col">
+                        <span class="text-orange-500 font-semibold">Place your ads code here</span>
+                        <span class="text-orange-400 text-xs mt-1">728 × 90 pixels</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="md:col-span-2">
+                    <h3 class="text-xl font-bold mb-4">Free Resume Builder</h3>
+                    <p class="text-gray-300 mb-4">
+                        Create professional resumes with our free online resume builder. Choose from beautiful templates and download instantly.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-white transition duration-300">
+                            <i class="fab fa-youtube text-xl"></i>
+                            <span class="sr-only">YouTube</span>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook text-xl"></i>
+                            <span class="sr-only">Facebook</span>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition duration-300">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                            <span class="sr-only">WhatsApp</span>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition duration-300">
+                            <i class="fab fa-telegram text-xl"></i>
+                            <span class="sr-only">Telegram</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#templates" class="text-gray-300 hover:text-white transition duration-300">Templates</a></li>
+                        <li><a href="complete-resume-builder.html" class="text-gray-300 hover:text-white transition duration-300">Build Resume</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-gray-300 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="privacy-policy.html" class="text-gray-300 hover:text-white transition duration-300">Privacy Policy</a></li>
+                        <li><a href="disclaimer.html" class="text-gray-300 hover:text-white transition duration-300">Disclaimer</a></li>
+                        <li><a href="terms.html" class="text-gray-300 hover:text-white transition duration-300">Terms & Conditions</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-white transition duration-300">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2025 Free Resume Builder. All rights reserved. | Create professional resumes online for free.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="script.js"></script>
+    
+    <!-- Clear Executive Style Template Cache -->
+    <script>
+        // Clear Executive Style Template Data and Cache
+        console.log('Clearing Executive Style template data...');
+
+        // Clear all Executive Style related localStorage items
+        const keysToRemove = [
+            'executive_resume_data',
+            'executive_resume_data_v2',
+            'executive_template_data',
+            'professional_template_data',
+            'executive_style_data',
+            'executive_cache',
+            'executive_settings'
+        ];
+
+        keysToRemove.forEach(key => {
+            if (localStorage.getItem(key)) {
+                localStorage.removeItem(key);
+                console.log(`Removed: ${key}`);
+            }
+        });
+
+        // Clear sessionStorage
+        keysToRemove.forEach(key => {
+            if (sessionStorage.getItem(key)) {
+                sessionStorage.removeItem(key);
+                console.log(`Removed from session: ${key}`);
+            }
+        });
+
+        // Clear any IndexedDB data related to Executive Style
+        if ('indexedDB' in window) {
+            const deleteReq = indexedDB.deleteDatabase('executive_resume_db');
+            deleteReq.onsuccess = () => console.log('Executive IndexedDB cleared');
+        }
+
+        // Clear service worker cache if present
+        if ('serviceWorker' in navigator && 'caches' in window) {
+            caches.keys().then(cacheNames => {
+                cacheNames.forEach(cacheName => {
+                    if (cacheName.includes('executive') || cacheName.includes('professional-template')) {
+                        caches.delete(cacheName);
+                        console.log(`Cleared cache: ${cacheName}`);
+                    }
+                });
+            });
+        }
+
+        console.log('Executive Style template data cleared completely!');
+    </script>
+</body>
+</html>

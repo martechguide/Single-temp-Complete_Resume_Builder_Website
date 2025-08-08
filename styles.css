@@ -1,0 +1,690 @@
+/* Custom styles for the resume builder */
+.form-section {
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-section:hover {
+    border-color: #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.form-section.dragging {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+    opacity: 0.8;
+}
+
+.section-title {
+    transition: color 0.2s ease;
+}
+
+.section-title:hover {
+    color: #3b82f6;
+}
+
+.resume-template {
+    background: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.resume-template:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Template specific styles with A4 optimization */
+.template-classic {
+    font-family: 'Times New Roman', serif;
+    font-size: 11pt;
+    line-height: 1.3;
+}
+
+.template-modern {
+    font-family: 'Arial', sans-serif;
+    font-size: 11pt;
+    line-height: 1.3;
+}
+
+.template-creative {
+    font-family: 'Arial', sans-serif;
+    font-size: 11pt;
+    line-height: 1.3;
+}
+
+.template-professional {
+    font-family: 'Arial', sans-serif;
+    font-size: 11pt;
+    line-height: 1.3;
+}
+
+/* A4 PDF optimized typography */
+.resume-preview h1 {
+    font-size: 18pt;
+    margin-bottom: 8pt;
+    margin-top: 0;
+}
+
+.resume-preview h2 {
+    font-size: 14pt;
+    margin-bottom: 6pt;
+    margin-top: 12pt;
+}
+
+.resume-preview h3 {
+    font-size: 12pt;
+    margin-bottom: 4pt;
+    margin-top: 8pt;
+}
+
+.resume-preview p, .resume-preview li {
+    font-size: 11pt;
+    margin-bottom: 4pt;
+    line-height: 1.3;
+}
+
+.resume-preview ul, .resume-preview ol {
+    margin-bottom: 8pt;
+    padding-left: 20pt;
+}
+
+.resume-preview .section {
+    margin-bottom: 12pt;
+}
+
+.resume-preview .contact-info {
+    margin-bottom: 16pt;
+}
+
+/* Preview zoom styles */
+.zoom-container {
+    transform-origin: top left;
+    transition: transform 0.2s ease;
+}
+
+/* A4 Preview Container Styling */
+.a4-preview-container {
+    max-width: fit-content;
+    margin: 0 auto;
+}
+
+.resume-preview-a4 {
+    width: 210mm;
+    height: 297mm;
+    padding: 15mm;
+    margin: 0;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Times New Roman', serif;
+    font-size: 11pt;
+    line-height: 1.3;
+    color: #333;
+    box-sizing: border-box;
+    overflow: hidden;
+    transform-origin: top left;
+    border-radius: 2px;
+}
+
+/* Responsive scaling for A4 preview */
+@media (max-width: 768px) {
+    .a4-preview-container {
+        padding: 8px;
+    }
+    
+    .resume-preview-a4 {
+        transform: scale(0.4);
+        transform-origin: top center;
+        margin-bottom: -60%;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1023px) {
+    .resume-preview-a4 {
+        transform: scale(0.6);
+        transform-origin: top center;
+        margin-bottom: -40%;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+    .resume-preview-a4 {
+        transform: scale(0.7);
+        transform-origin: top center;
+        margin-bottom: -30%;
+    }
+}
+
+@media (min-width: 1280px) {
+    .resume-preview-a4 {
+        transform: scale(0.8);
+        transform-origin: top center;
+        margin-bottom: -20%;
+    }
+}
+
+/* Legacy resume preview for compatibility */
+.resume-preview {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    padding: 15mm;
+    width: 210mm;
+    max-width: 210mm;
+    min-height: 267mm;
+    max-height: 267mm;
+    font-family: 'Times New Roman', serif;
+    line-height: 1.3;
+    color: #333;
+    transform-origin: top left;
+    overflow: hidden;
+    font-size: 11pt;
+    box-sizing: border-box;
+    page-break-inside: avoid;
+}
+
+/* Responsive adjustments for different screen sizes */
+@media (max-width: 768px) {
+    .resume-preview {
+        width: 100%;
+        max-width: 100%;
+        padding: 10mm;
+        min-height: auto;
+        max-height: none;
+        font-size: 10pt;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1023px) {
+    .resume-preview {
+        width: 190mm;
+        max-width: 190mm;
+        padding: 12mm;
+        font-size: 10.5pt;
+    }
+}
+
+@media (min-width: 1024px) {
+    .resume-preview {
+        width: 210mm;
+        max-width: 210mm;
+        padding: 15mm;
+        font-size: 11pt;
+    }
+}
+
+/* Print and PDF export styles */
+@media print {
+    .resume-preview {
+        width: 210mm !important;
+        max-width: 210mm !important;
+        min-height: 297mm !important;
+        max-height: 297mm !important;
+        padding: 15mm !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        font-size: 11pt !important;
+        page-break-inside: avoid !important;
+        overflow: hidden !important;
+    }
+}
+
+#resumePreview {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+#resumePreview .resume-preview {
+    margin: 0;
+    width: 100%;
+    max-width: none;
+}
+
+/* Enhanced responsive form styling */
+.form-section {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.form-section .grid {
+    transition: grid-template-columns 0.3s ease;
+}
+
+/* Fix responsive grid layout issues */
+@media (max-width: 640px) {
+    .grid.grid-cols-1.sm\:grid-cols-2 {
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+    }
+    
+    .form-section {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .form-section h3 {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+}
+
+@media (min-width: 641px) {
+    .grid.grid-cols-1.sm\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 16px;
+    }
+    
+    .form-section {
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .xl\:grid-cols-12 {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+    
+    .xl\:col-span-6 {
+        grid-column: span 6 / span 6;
+    }
+}
+
+/* Fix column balance on large screens */
+@media (min-width: 1280px) {
+    .max-w-7xl .grid.xl\:grid-cols-12 {
+        gap: 2rem;
+    }
+    
+    .xl\:col-span-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+/* Mobile-first responsive adjustments */
+@media (max-width: 640px) {
+    .form-section {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .form-section h3 {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+    
+    .form-section input,
+    .form-section textarea,
+    .form-section select {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 12px;
+    }
+    
+    .form-section .grid {
+        gap: 12px;
+    }
+    
+    .form-section .flex {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .form-section .flex.space-x-2 {
+        flex-direction: row;
+        gap: 8px;
+    }
+}
+
+/* Tablet responsive adjustments */
+@media (min-width: 641px) and (max-width: 1023px) {
+    .form-section {
+        padding: 16px;
+    }
+    
+    .form-section input,
+    .form-section textarea,
+    .form-section select {
+        padding: 10px;
+    }
+}
+
+/* Ensure grid responsiveness works properly */
+.grid.grid-cols-1.sm\:grid-cols-2 {
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+    .grid.grid-cols-1.sm\:grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Button responsiveness */
+.add-item, .remove-item, .delete-section {
+    transition: all 0.2s ease;
+    min-height: 44px; /* Touch target size */
+}
+
+@media (max-width: 640px) {
+    .add-item, .remove-item, .delete-section {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
+/* Preview section responsive height */
+@media (max-width: 1023px) {
+    .lg\:col-span-5 .border.border-gray-300 {
+        height: 400px !important;
+        min-height: 300px !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lg\:col-span-5 .border.border-gray-300 {
+        height: 700px !important;
+        min-height: 600px !important;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Drag and drop indicators */
+.drag-over {
+    border-color: #3b82f6 !important;
+    background-color: #eff6ff !important;
+}
+
+.drag-placeholder {
+    border: 2px dashed #3b82f6;
+    background-color: #eff6ff;
+    height: 60px;
+    margin: 8px 0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b82f6;
+    font-size: 14px;
+}
+
+/* Animation for section transitions */
+.section-enter {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.section-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.section-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-exit-active {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Resume preview styles */
+.resume-preview {
+    width: 210mm;
+    min-height: 297mm;
+    background: white;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.resume-preview h1 {
+    margin: 0 0 4px 0;
+    font-weight: bold;
+}
+
+.resume-preview h2 {
+    margin: 16px 0 8px 0;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.resume-preview h3 {
+    margin: 8px 0 4px 0;
+    font-weight: 600;
+}
+
+.resume-preview p {
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+}
+
+.resume-preview ul {
+    margin: 0 0 8px 0;
+    padding-left: 16px;
+}
+
+.resume-preview li {
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+/* Template specific preview styles */
+.template-classic .resume-preview {
+    padding: 40px;
+    font-size: 11pt;
+    line-height: 1.4;
+}
+
+.template-modern .resume-preview {
+    padding: 30px;
+    font-size: 10pt;
+    line-height: 1.3;
+}
+
+.template-creative .resume-preview {
+    padding: 0;
+    font-size: 10pt;
+    line-height: 1.3;
+}
+
+.template-professional .resume-preview {
+    padding: 30px;
+    font-size: 10pt;
+    line-height: 1.3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .resume-preview {
+        width: 100%;
+        min-height: auto;
+        transform: scale(0.8);
+        transform-origin: top left;
+    }
+}
+
+/* Ad Container Styles - Responsive and Network Compatible */
+.ad-container {
+    clear: both;
+    margin: 20px 0;
+}
+
+.ad-banner {
+    max-width: 728px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.ad-medium-rectangle {
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.ad-leaderboard {
+    max-width: 728px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.ad-sidebar {
+    width: 100%;
+    max-width: 300px;
+}
+
+/* AdSense/Adsterra Responsive Styles */
+.ad-banner > div,
+.ad-leaderboard > div {
+    min-height: 90px;
+}
+
+.ad-medium-rectangle > div {
+    min-height: 250px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.ad-sidebar > div {
+    min-height: 250px;
+    width: 100%;
+}
+
+/* Mobile Ad Adjustments */
+@media (max-width: 768px) {
+    .ad-banner,
+    .ad-leaderboard {
+        max-width: 320px;
+    }
+    
+    .ad-banner > div,
+    .ad-leaderboard > div {
+        min-height: 50px;
+    }
+    
+    .ad-medium-rectangle {
+        max-width: 250px;
+    }
+    
+    .ad-medium-rectangle > div {
+        min-height: 200px;
+        max-width: 250px;
+    }
+    
+    /* Hide sidebar ads on mobile */
+    .ad-sidebar {
+        display: none;
+    }
+}
+
+/* Tablet Ad Adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .ad-banner,
+    .ad-leaderboard {
+        max-width: 728px;
+    }
+    
+    .ad-sidebar {
+        max-width: 250px;
+    }
+    
+    .ad-sidebar > div {
+        min-height: 200px;
+    }
+}
+
+/* Ad placeholder styles for demo */
+.ad-container [class*="border-dashed"] {
+    transition: all 0.3s ease;
+}
+
+.ad-container [class*="border-dashed"]:hover {
+    border-color: #3b82f6;
+    background-color: #f8fafc;
+}
+
+/* Sticky sidebar ad */
+.sticky {
+    position: sticky;
+    top: 20px;
+}
+
+@media (max-width: 768px) {
+    .resume-preview {
+        transform: scale(0.6);
+    }
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Form validation styles */
+.invalid {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 1px #ef4444;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* Success feedback */
+.success-message {
+    background-color: #10b981;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.success-message i {
+    margin-right: 8px;
+}

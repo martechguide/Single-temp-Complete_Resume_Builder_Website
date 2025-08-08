@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Clean Professional Resume Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        /* Theme Variables */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border-color: #e9ecef;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --accent-color: #3b82f6;
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: #444444;
+            --shadow-color: rgba(255, 255, 255, 0.1);
+            --accent-color: #60a5fa;
+        }
+        
+        body {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        /* Resume Container */
+        .resume-container {
+            width: 794px;
+            min-height: 1123px;
+            background: white;
+            margin: 20px auto;
+            padding: 40px;
+            box-shadow: 0 0 20px var(--shadow-color);
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        /* Dark Theme for Resume */
+        [data-theme="dark"] .resume-container {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        /* Header Section */
+        .resume-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .photo-section {
+            margin-right: 30px;
+        }
+        
+        .photo-container {
+            width: 120px;
+            height: 120px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: #f8f9fa;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        
+        .photo-placeholder {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .personal-info {
+            flex: 1;
+        }
+        
+        .name {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .profession {
+            font-size: 18px;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-item i {
+            width: 18px;
+            margin-right: 8px;
+            color: var(--accent-color);
+        }
+        
+        /* Sections */
+        .section {
+            margin-bottom: 25px;
+            position: relative;
+            padding: 15px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .section:hover {
+            border-color: var(--border-color);
+            background: rgba(59, 130, 246, 0.02);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--accent-color);
+            color: var(--text-primary);
+            flex: 1;
+            margin-right: 15px;
+        }
+        
+        .section-controls {
+            display: flex;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .section:hover .section-controls {
+            opacity: 1;
+        }
+        
+        .drag-handle {
+            cursor: move;
+            color: var(--text-secondary);
+            padding: 5px;
+            border-radius: 4px;
+            background: var(--bg-secondary);
+        }
+        
+        .drag-handle:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .section-btn {
+            padding: 4px 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .add-section-btn {
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .add-section-btn:hover {
+            background: #2563eb;
+        }
+        
+        .remove-section-btn {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .remove-section-btn:hover {
+            background: #dc2626;
+        }
+        
+        /* Dragging States */
+        .section.dragging {
+            opacity: 0.5;
+            transform: rotate(2deg);
+        }
+        
+        .section.drag-over {
+            border-color: var(--accent-color);
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        /* Editable Elements */
+        .editable {
+            outline: none;
+            border: 1px solid transparent;
+            padding: 2px 4px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            min-height: 20px;
+            display: inline-block;
+            min-width: 50px;
+        }
+        
+        .editable:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-color);
+        }
+        
+        .editable:focus {
+            background-color: rgba(59, 130, 246, 0.15);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+        
+        /* Experience Items */
+        .experience-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            background: #fafafa;
+            position: relative;
+        }
+        
+        [data-theme="dark"] .experience-item {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+        }
+        
+        .job-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .company-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .company-name {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+        
+        .duration {
+            color: var(--text-secondary);
+        }
+        
+        .achievements {
+            list-style: disc;
+            padding-left: 20px;
+        }
+        
+        .achievements li {
+            margin-bottom: 5px;
+        }
+        
+        /* Skills */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .skill-tag {
+            background: var(--accent-color);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Education Items */
+        .education-item {
+            margin-bottom: 15px;
+            padding: 12px;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            background: #fafafa;
+        }
+        
+        [data-theme="dark"] .education-item {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+        }
+        
+        .degree {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .institution-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+        
+        .institution {
+            color: var(--accent-color);
+        }
+        
+        .year {
+            color: var(--text-secondary);
+        }
+        
+
+        
+        /* Project Section Styles */
+        .project-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        [data-theme="dark"] .project-item {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+        }
+        
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .project-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+        
+        .project-duration {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        
+        .tech-tag {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .tech-tag:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+        }
+        
+        .tech-tag.editable:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+        }
+        
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .project-features {
+            list-style: disc;
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+        
+        .project-features li {
+            margin-bottom: 4px;
+        }
+        
+        /* Control Panel */
+        .control-panel {
+            position: relative;
+            margin: 20px auto;
+            max-width: 800px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+        
+        .control-panel h3 {
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+        
+        .control-btn {
+            width: 100%;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-btn {
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .theme-btn:hover {
+            background: #2563eb;
+        }
+        
+        .export-btn {
+            background: #10b981;
+            color: white;
+        }
+        
+        .export-btn:hover {
+            background: #059669;
+        }
+        
+        .add-btn {
+            background: #8b5cf6;
+            color: white;
+        }
+        
+        .add-btn:hover {
+            background: #7c3aed;
+        }
+        
+        /* Loading and Notifications */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #10b981;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            z-index: 10000;
+            font-weight: 500;
+        }
+        
+        .notification.error {
+            background: #ef4444;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .resume-container {
+                width: 95%;
+                margin: 10px auto;
+                padding: 20px;
+            }
+            
+            .control-panel {
+                position: relative;
+                margin: 10px auto;
+                width: 95%;
+            }
+            
+            .resume-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .photo-section {
+                margin: 0 auto 20px;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .company-info {
+                flex-direction: column;
+            }
+            
+            .institution-info {
+                flex-direction: column;
+            }
+        
+
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- Control Panel -->
+    <div class="control-panel">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; align-items: center;">
+            <button class="control-btn" onclick="goBackToMainPage()" style="background: #6366f1; color: white;">
+                <i class="fas fa-arrow-left"></i> Back to Main
+            </button>
+            
+            <button class="control-btn theme-btn" onclick="toggleTheme()">
+                <i class="fas fa-palette"></i> Toggle Theme
+            </button>
+            
+            <button class="control-btn export-btn" onclick="exportToPDF()">
+                <i class="fas fa-file-pdf"></i> Export PDF
+            </button>
+            
+            <button class="control-btn export-btn" onclick="exportToImage()">
+                <i class="fas fa-image"></i> Export Image
+            </button>
+            
+            <button class="control-btn" onclick="addNewSection()" style="background: #10b981; color: white;">
+                <i class="fas fa-plus"></i> Add Section
+            </button>
+            
+            <button class="control-btn" onclick="clearAllData()" style="background: #ef4444; color: white;">
+                <i class="fas fa-trash"></i> Clear All
+            </button>
+        </div>
+    </div>
+
+    <!-- Advertisement Area 1 - Between Controller and Template -->
+    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background: linear-gradient(45deg, #fff3e0, #ffe0b2); border: 3px dashed #ff9800; border-radius: 12px; text-align: center;">
+        <div style="color: #e65100; font-weight: bold; font-size: 18px; margin-bottom: 10px;">📢 Advertisement Zone 1</div>
+        <div style="color: #d32f2f; font-weight: bold; font-size: 16px; margin: 8px 0;">Place Your Ad Code Here</div>
+        <div style="color: #666; font-size: 14px;">728 × 90 pixels (Leaderboard Banner)</div>
+    </div>
+
+    <!-- Resume Container -->
+    <div class="resume-container" id="resumeContainer">
+        
+
+
+        <!-- Header Section -->
+        <div class="resume-header">
+            <div class="photo-section">
+                <div class="photo-container" onclick="uploadPhoto()">
+                    <img id="profilePhoto" style="display: none;" alt="Profile Photo">
+                    <div class="photo-placeholder" id="photoPlaceholder">
+                        <i class="fas fa-camera" style="font-size: 24px; display: block; margin-bottom: 5px;"></i>
+                        Click to upload photo
+                    </div>
+                </div>
+                <input type="file" id="photoInput" accept="image/*" style="display: none;">
+            </div>
+            
+            <div class="personal-info">
+                <div class="name editable" contenteditable="true" data-field="fullName">SATYA PRAKASH</div>
+                <div class="profession editable" contenteditable="true" data-field="profession">Engineer</div>
+                
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span class="editable" contenteditable="true" data-field="email">satyaprakash@email.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span class="editable" contenteditable="true" data-field="phone">+91 7900000007</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span class="editable" contenteditable="true" data-field="location">Mau</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-linkedin"></i>
+                        <span class="editable" contenteditable="true" data-field="linkedin">linkedin.com/in/satyaprakash</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Summary -->
+        <div class="section" draggable="true" data-section="summary">
+            <div class="section-header">
+                <div class="section-title editable" contenteditable="true" data-field="summaryTitle">Professional Summary</div>
+                <div class="section-controls">
+                    <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>
+                    <button class="section-btn remove-section-btn" onclick="removeSection(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <p class="editable" contenteditable="true" data-field="summary">
+                Experienced Engineer with expertise in developing innovative solutions and managing complex projects. 
+                Proven track record of delivering high-quality results in fast-paced environments. Strong analytical 
+                and problem-solving skills with excellent communication abilities.
+            </p>
+        </div>
+
+        <!-- Professional Experience -->
+        <div class="section" draggable="true" data-section="experience">
+            <div class="section-header">
+                <div class="section-title editable" contenteditable="true" data-field="experienceTitle">Professional Experience</div>
+                <div class="section-controls">
+                    <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>
+                    <button class="section-btn add-section-btn" onclick="addExperience()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="section-btn remove-section-btn" onclick="removeSection(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="experienceContainer">
+                <div class="experience-item">
+                    <div class="job-title editable" contenteditable="true" data-field="jobTitle">Senior Engineer</div>
+                    <div class="company-info">
+                        <span class="company-name editable" contenteditable="true" data-field="company">Tech Solutions Inc.</span>
+                        <span class="duration editable" contenteditable="true" data-field="duration">January 2020 - Present</span>
+                    </div>
+                    <ul class="achievements">
+                        <li class="editable" contenteditable="true" data-field="achievement">Led development of innovative software solutions that improved efficiency by 40%</li>
+                        <li class="editable" contenteditable="true" data-field="achievement">Managed cross-functional teams of 8+ members</li>
+                        <li class="editable" contenteditable="true" data-field="achievement">Implemented best practices resulting in 25% reduction in project delivery time</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Education -->
+        <div class="section" draggable="true" data-section="education">
+            <div class="section-header">
+                <div class="section-title editable" contenteditable="true" data-field="educationTitle">Education</div>
+                <div class="section-controls">
+                    <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>
+                    <button class="section-btn add-section-btn" onclick="addEducation()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="section-btn remove-section-btn" onclick="removeSection(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="educationContainer">
+                <div class="education-item">
+                    <div class="degree editable" contenteditable="true" data-field="degree">Bachelor of Technology in Engineering</div>
+                    <div class="institution-info">
+                        <span class="institution editable" contenteditable="true" data-field="institution">Indian Institute of Technology</span>
+                        <span class="year editable" contenteditable="true" data-field="year">2018</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Skills -->
+        <div class="section" draggable="true" data-section="skills">
+            <div class="section-header">
+                <div class="section-title editable" contenteditable="true" data-field="skillsTitle">Technical Skills</div>
+                <div class="section-controls">
+                    <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>
+                    <button class="section-btn add-section-btn" onclick="addSkill()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="section-btn remove-section-btn" onclick="removeSection(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="skills-container" id="skillsContainer">
+                <div class="skill-tag">
+                    <span class="editable" contenteditable="true" data-field="skill">JavaScript</span>
+                </div>
+                <div class="skill-tag">
+                    <span class="editable" contenteditable="true" data-field="skill">Python</span>
+                </div>
+                <div class="skill-tag">
+                    <span class="editable" contenteditable="true" data-field="skill">React</span>
+                </div>
+                <div class="skill-tag">
+                    <span class="editable" contenteditable="true" data-field="skill">Node.js</span>
+                </div>
+                <div class="skill-tag">
+                    <span class="editable" contenteditable="true" data-field="skill">Database Design</span>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Certifications -->
+        <div class="section" draggable="true" data-section="certifications">
+            <div class="section-header">
+                <div class="section-title editable" contenteditable="true" data-field="certificationsTitle">Certifications</div>
+                <div class="section-controls">
+                    <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>
+                    <button class="section-btn add-section-btn" onclick="addCertification()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="section-btn remove-section-btn" onclick="removeSection(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="certificationsContainer">
+                <div class="education-item">
+                    <div class="degree editable" contenteditable="true" data-field="certification">AWS Certified Solutions Architect</div>
+                    <div class="institution-info">
+                        <span class="institution editable" contenteditable="true" data-field="issuer">Amazon Web Services</span>
+                        <span class="year editable" contenteditable="true" data-field="issueDate">2023</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Projects -->
+        <div class="section" draggable="true" data-section="projects">
+            <div class="section-header">
+                <div class="section-title editable" contenteditable="true" data-field="projectsTitle">Projects</div>
+                <div class="section-controls">
+                    <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>
+                    <button class="section-btn add-section-btn" onclick="addProject()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="section-btn remove-section-btn" onclick="removeSection(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="projectsContainer">
+                <div class="project-item">
+                    <div class="project-header">
+                        <div class="project-name editable" contenteditable="true" data-field="projectTitle">Professional Resume Builder</div>
+                        <div class="project-duration editable" contenteditable="true" data-field="projectDuration">2024 - Present</div>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag editable" contenteditable="true" data-field="techTag">JavaScript</span>
+                        <span class="tech-tag editable" contenteditable="true" data-field="techTag">HTML5</span>
+                        <span class="tech-tag editable" contenteditable="true" data-field="techTag">CSS3</span>
+                        <span class="tech-tag editable" contenteditable="true" data-field="techTag">PDF.js</span>
+                    </div>
+                    <div class="project-description">
+                        <p class="editable" contenteditable="true" data-field="projectDesc">Developed a modern web application for creating professional resumes with interactive editing, theme switching, and high-quality PDF export capabilities using latest web technologies.</p>
+                        <ul class="project-features">
+                            <li class="editable" contenteditable="true" data-field="feature">Interactive drag-and-drop interface using vanilla JavaScript</li>
+                            <li class="editable" contenteditable="true" data-field="feature">Responsive HTML5 semantic structure with CSS3 Grid and Flexbox</li>
+                            <li class="editable" contenteditable="true" data-field="feature">PDF generation and export functionality with PDF.js integration</li>
+                            <li class="editable" contenteditable="true" data-field="feature">Local storage data persistence and auto-save features</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Declaration -->
+        <div class="section" draggable="true" data-section="declaration">
+            <div class="section-header">
+                <div class="section-title editable" contenteditable="true" data-field="declarationTitle">Declaration</div>
+                <div class="section-controls">
+                    <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>
+                    <button class="section-btn remove-section-btn" onclick="removeSection(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <p class="editable" contenteditable="true" data-field="declaration">
+                I hereby declare that all the information provided above is true and accurate to the best of my knowledge.
+            </p>
+        </div>
+    </div>
+
+    <!-- Advertisement Area 2 - Below Template -->
+    <div style="max-width: 800px; margin: 30px auto; padding: 25px; background: linear-gradient(45deg, #e8f5e8, #c8e6c8); border: 3px dashed #4caf50; border-radius: 12px; text-align: center;">
+        <div style="color: #2e7d32; font-weight: bold; font-size: 18px; margin-bottom: 10px;">💰 Advertisement Zone 2</div>
+        <div style="color: #d32f2f; font-weight: bold; font-size: 16px; margin: 8px 0;">Place Your Ad Code Here</div>
+        <div style="color: #666; font-size: 14px;">728 × 90 pixels (Bottom Leaderboard)</div>
+        <div style="color: #555; font-size: 12px; margin-top: 5px;">Prime location for maximum engagement</div>
+    </div>
+
+    <script>
+        // Global Variables
+        let currentTheme = 'light';
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+        
+        function initializeApp() {
+            console.log('New Clean Professional Resume Builder initialized');
+            
+            // Clear any old cached data
+            clearOldCache();
+            
+            // Load saved data
+            loadSavedData();
+            
+            // Initialize photo upload
+            initializePhotoUpload();
+            
+            // Setup auto-save
+            setupAutoSave();
+            
+            // Load theme
+            loadTheme();
+            
+            // Initialize drag and drop
+            initializeDragAndDrop();
+            
+            console.log('Application ready');
+        }
+        
+        // Navigation Function
+        function goBackToMainPage() {
+            console.log('Back to main page clicked');
+            
+            try {
+                // Simple approach - ask user if they want to save first
+                const saveFirst = confirm('Do you want to save your resume before going back to the main page?');
+                
+                if (saveFirst) {
+                    saveData();
+                    showNotification('Resume saved successfully!');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 500);
+                } else {
+                    // Go back immediately
+                    window.location.href = 'index.html';
+                }
+            } catch (error) {
+                console.error('Error in goBackToMainPage:', error);
+                // Fallback - just go back
+                window.location.href = 'index.html';
+            }
+        }
+        
+        function checkForUnsavedChanges() {
+            // Check if there's any content that differs from saved data
+            const currentData = getAllResumeData();
+            const savedData = localStorage.getItem('newCleanResumeData');
+            
+            if (!savedData) return true; // No saved data means changes exist
+            
+            try {
+                const parsed = JSON.parse(savedData);
+                return JSON.stringify(currentData) !== JSON.stringify(parsed);
+            } catch (e) {
+                return true; // If parsing fails, assume there are changes
+            }
+        }
+        
+        // Drag and Drop Functionality
+        function initializeDragAndDrop() {
+            const sections = document.querySelectorAll('.section[draggable="true"]');
+            
+            sections.forEach(section => {
+                section.addEventListener('dragstart', handleDragStart);
+                section.addEventListener('dragover', handleDragOver);
+                section.addEventListener('drop', handleDrop);
+                section.addEventListener('dragend', handleDragEnd);
+            });
+        }
+        
+        let draggedElement = null;
+        
+        function handleDragStart(e) {
+            draggedElement = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+        
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            
+            if (this !== draggedElement) {
+                this.classList.add('drag-over');
+            }
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            
+            if (this !== draggedElement) {
+                const resumeContainer = document.getElementById('resumeContainer');
+                const allSections = Array.from(resumeContainer.querySelectorAll('.section[draggable="true"]'));
+                
+                const draggedIndex = allSections.indexOf(draggedElement);
+                const targetIndex = allSections.indexOf(this);
+                
+                if (draggedIndex < targetIndex) {
+                    resumeContainer.insertBefore(draggedElement, this.nextSibling);
+                } else {
+                    resumeContainer.insertBefore(draggedElement, this);
+                }
+                
+                saveData();
+            }
+            
+            this.classList.remove('drag-over');
+        }
+        
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('drag-over');
+            });
+            
+            draggedElement = null;
+        }
+        
+        // Section Management
+        function removeSection(button) {
+            if (confirm('Are you sure you want to remove this section?')) {
+                const section = button.closest('.section');
+                section.remove();
+                saveData();
+                showNotification('Section removed successfully');
+            }
+        }
+        
+        // Add new section at the end
+        function addNewSectionAtEnd(sectionHtml, sectionType) {
+            const resumeContainer = document.getElementById('resumeContainer');
+            const declarationSection = resumeContainer.querySelector('[data-section="declaration"]');
+            
+            const newSection = document.createElement('div');
+            newSection.innerHTML = sectionHtml;
+            const actualSection = newSection.firstElementChild;
+            
+            if (declarationSection) {
+                resumeContainer.insertBefore(actualSection, declarationSection);
+            } else {
+                resumeContainer.appendChild(actualSection);
+            }
+            
+            // Re-initialize drag and drop for new section
+            actualSection.addEventListener('dragstart', handleDragStart);
+            actualSection.addEventListener('dragover', handleDragOver);
+            actualSection.addEventListener('drop', handleDrop);
+            actualSection.addEventListener('dragend', handleDragEnd);
+            
+            setupAutoSaveForElement(actualSection);
+            saveData();
+            
+            return actualSection;
+        }
+        
+        // Add New Section functionality
+        function addNewSection() {
+            const sectionType = prompt("Enter section type (experience, education, skill, certification, code, project, custom):");
+            if (!sectionType) return;
+            
+            switch(sectionType.toLowerCase()) {
+                case 'experience':
+                    addNewExperience();
+                    break;
+                case 'education':
+                    addNewEducation();
+                    break;
+                case 'skill':
+                case 'skills':
+                    addNewSkillsSection();
+                    break;
+                case 'certification':
+                case 'certifications':
+                    addNewCertification();
+                    break;
+                case 'code':
+                case 'programming':
+                    addNewCodeSection();
+                    break;
+                case 'project':
+                case 'projects':
+                    addNewProjectSection();
+                    break;
+                default:
+                    addCustomSection(sectionType);
+            }
+        }
+        
+        function addNewExperience() {
+            const sectionHtml = `
+                <div class="section" draggable="true" data-section="experience-new">
+                    <div class="section-header">
+                        <div class="section-title editable" contenteditable="true" data-field="experienceTitle">New Experience Section</div>
+                        <div class="section-controls">
+                            <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>
+                            <button class="section-btn add-section-btn" onclick="addExperience()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button class="section-btn remove-section-btn" onclick="removeSection(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="experience-container">
+                        <div class="experience-item">
+                            <div class="job-title editable" contenteditable="true" data-field="jobTitle">Job Title</div>
+                            <div class="company-info">
+                                <span class="company-name editable" contenteditable="true" data-field="company">Company Name</span>
+                                <span class="duration editable" contenteditable="true" data-field="duration">Start Date - End Date</span>
+                            </div>
+                            <ul class="achievements">
+                                <li class="editable" contenteditable="true" data-field="achievement">Key achievement or responsibility</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            addNewSectionAtEnd(sectionHtml, 'experience');
+            showNotification('Experience section added at the end');
+        }
+        
+        function addNewProjectSection() {
+            const sectionHtml = `
+                <div class="section" draggable="true" data-section="projects-new">
+                    <div class="section-header">
+                        <div class="section-title editable" contenteditable="true" data-field="projectsTitle">New Projects Section</div>
+                        <div class="section-controls">
+                            <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>
+                            <button class="section-btn add-section-btn" onclick="addProject()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button class="section-btn remove-section-btn" onclick="removeSection(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="projects-container">
+                        <div class="project-item">
+                            <div class="project-header">
+                                <div class="project-name editable" contenteditable="true" data-field="projectTitle">Project Name</div>
+                                <div class="project-duration editable" contenteditable="true" data-field="projectDuration">2024</div>
+                            </div>
+                            <div class="project-tech">
+                                <span class="tech-tag editable" contenteditable="true" data-field="techTag">Technology</span>
+                            </div>
+                            <div class="project-description">
+                                <p class="editable" contenteditable="true" data-field="projectDesc">Project description</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            addNewSectionAtEnd(sectionHtml, 'projects');
+            showNotification('Projects section added at the end');
+        }
+        
+        function addNewCodeSection() {
+            const sectionHtml = `
+                <div class="section" draggable="true" data-section="code-new">
+                    <div class="section-header">
+                        <div class="section-title editable" contenteditable="true" data-field="codeTitle">New Code Section</div>
+                        <div class="section-controls">
+                            <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>
+                            <button class="section-btn add-section-btn" onclick="addCodeSection()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button class="section-btn remove-section-btn" onclick="removeSection(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="code-container">
+                        <div class="code-section">
+                            <div class="code-header">
+                                <span class="language editable" contenteditable="true" data-field="language">JavaScript</span>
+                                <span class="project-name editable" contenteditable="true" data-field="projectName">Project Name</span>
+                            </div>
+                            <div class="code-block">
+                                <pre class="editable" contenteditable="true" data-field="codeSnippet">// Your code here
+console.log("Hello World");</pre>
+                            </div>
+                            <div class="code-description">
+                                <p class="editable" contenteditable="true" data-field="codeDescription">Code description</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            addNewSectionAtEnd(sectionHtml, 'code');
+            showNotification('Code section added at the end');
+        }
+        
+        function addCustomSection(sectionType) {
+            const sectionHtml = `
+                <div class="section" draggable="true" data-section="custom-${Date.now()}">
+                    <div class="section-header">
+                        <div class="section-title editable" contenteditable="true" data-field="customTitle">${sectionType}</div>
+                        <div class="section-controls">
+                            <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>
+                            <button class="section-btn remove-section-btn" onclick="removeSection(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="custom-content">
+                        <p class="editable" contenteditable="true" data-field="customContent">Add your content here...</p>
+                    </div>
+                </div>
+            `;
+            
+            addNewSectionAtEnd(sectionHtml, 'custom');
+            showNotification(`${sectionType} section added at the end`);
+        }
+        
+        function clearOldCache() {
+            // Clear all old localStorage keys
+            const keysToRemove = [
+                'completeResumeData',
+                'professionalResumeData',
+                'resumeTheme',
+                'resumeData'
+            ];
+            
+            keysToRemove.forEach(key => {
+                localStorage.removeItem(key);
+            });
+            
+            console.log('Old cache cleared');
+        }
+        
+        // Theme Management
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(currentTheme);
+            saveTheme();
+        }
+        
+        function applyTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            currentTheme = theme;
+            console.log('Theme applied:', theme);
+        }
+        
+        function saveTheme() {
+            localStorage.setItem('newResumeTheme', currentTheme);
+        }
+        
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('newResumeTheme') || 'light';
+            applyTheme(savedTheme);
+        }
+        
+        // Photo Upload
+        function initializePhotoUpload() {
+            const photoInput = document.getElementById('photoInput');
+            photoInput.addEventListener('change', handlePhotoUpload);
+        }
+        
+        function uploadPhoto() {
+            document.getElementById('photoInput').click();
+        }
+        
+        function handlePhotoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('profilePhoto');
+                    const placeholder = document.getElementById('photoPlaceholder');
+                    
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    
+                    saveData();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // Data Management
+        function getAllResumeData() {
+            const data = {};
+            
+            // Get all editable elements
+            document.querySelectorAll('.editable[data-field]').forEach(element => {
+                const field = element.getAttribute('data-field');
+                const value = element.textContent.trim();
+                
+                if (!data[field]) {
+                    data[field] = [];
+                }
+                data[field].push(value);
+            });
+            
+            // Get photo
+            const photo = document.getElementById('profilePhoto');
+            if (photo && photo.src && !photo.src.includes('data:')) {
+                data.photo = photo.src;
+            }
+            
+            return data;
+        }
+        
+        function saveData() {
+            const data = getAllResumeData();
+            localStorage.setItem('newCleanResumeData', JSON.stringify(data));
+            console.log('Data saved successfully');
+        }
+        
+        function loadSavedData() {
+            const savedData = localStorage.getItem('newCleanResumeData');
+            if (savedData) {
+                try {
+                    const data = JSON.parse(savedData);
+                    
+                    // Load text data
+                    Object.keys(data).forEach(field => {
+                        if (field !== 'photo' && Array.isArray(data[field])) {
+                            const elements = document.querySelectorAll(`[data-field="${field}"]`);
+                            elements.forEach((element, index) => {
+                                if (data[field][index]) {
+                                    element.textContent = data[field][index];
+                                }
+                            });
+                        }
+                    });
+                    
+                    // Load photo
+                    if (data.photo) {
+                        const img = document.getElementById('profilePhoto');
+                        const placeholder = document.getElementById('photoPlaceholder');
+                        img.src = data.photo;
+                        img.style.display = 'block';
+                        placeholder.style.display = 'none';
+                    }
+                    
+                    console.log('Data loaded successfully');
+                } catch (e) {
+                    console.error('Error loading saved data:', e);
+                }
+            }
+        }
+        
+        function setupAutoSave() {
+            // Auto-save on input
+            document.querySelectorAll('.editable').forEach(element => {
+                element.addEventListener('input', debounce(saveData, 1000));
+                element.addEventListener('blur', saveData);
+            });
+        }
+        
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        // Add Functions
+        function addExperience() {
+            const container = document.getElementById('experienceContainer');
+            const newItem = document.createElement('div');
+            newItem.className = 'experience-item';
+            newItem.innerHTML = `
+                <div class="job-title editable" contenteditable="true" data-field="jobTitle">New Job Title</div>
+                <div class="company-info">
+                    <span class="company-name editable" contenteditable="true" data-field="company">Company Name</span>
+                    <span class="duration editable" contenteditable="true" data-field="duration">Start Date - End Date</span>
+                </div>
+                <ul class="achievements">
+                    <li class="editable" contenteditable="true" data-field="achievement">Key achievement or responsibility</li>
+                    <li class="editable" contenteditable="true" data-field="achievement">Another achievement or responsibility</li>
+                </ul>
+            `;
+            
+            container.appendChild(newItem);
+            setupAutoSaveForElement(newItem);
+            saveData();
+            showNotification('Experience added successfully');
+        }
+        
+        function addEducation() {
+            const container = document.getElementById('educationContainer');
+            const newItem = document.createElement('div');
+            newItem.className = 'education-item';
+            newItem.innerHTML = `
+                <div class="degree editable" contenteditable="true" data-field="degree">Degree Title</div>
+                <div class="institution-info">
+                    <span class="institution editable" contenteditable="true" data-field="institution">Institution Name</span>
+                    <span class="year editable" contenteditable="true" data-field="year">Year</span>
+                </div>
+            `;
+            
+            container.appendChild(newItem);
+            setupAutoSaveForElement(newItem);
+            saveData();
+            showNotification('Education added successfully');
+        }
+        
+        function addSkill() {
+            const container = document.getElementById('skillsContainer');
+            const newSkill = document.createElement('div');
+            newSkill.className = 'skill-tag';
+            newSkill.innerHTML = `
+                <span class="editable" contenteditable="true" data-field="skill">New Skill</span>
+            `;
+            
+            container.appendChild(newSkill);
+            setupAutoSaveForElement(newSkill);
+            saveData();
+            showNotification('Skill added successfully');
+        }
+        
+        function addCertification() {
+            const container = document.getElementById('certificationsContainer');
+            const newItem = document.createElement('div');
+            newItem.className = 'education-item';
+            newItem.innerHTML = `
+                <div class="degree editable" contenteditable="true" data-field="certification">New Certification</div>
+                <div class="institution-info">
+                    <span class="institution editable" contenteditable="true" data-field="issuer">Issuing Organization</span>
+                    <span class="year editable" contenteditable="true" data-field="issueDate">Issue Date</span>
+                </div>
+            `;
+            
+            container.appendChild(newItem);
+            setupAutoSaveForElement(newItem);
+            saveData();
+            showNotification('Certification added successfully');
+        }
+        
+        function setupAutoSaveForElement(element) {
+            element.querySelectorAll('.editable').forEach(editable => {
+                editable.addEventListener('input', debounce(saveData, 1000));
+                editable.addEventListener('blur', saveData);
+            });
+        }
+        
+        function addCodeSection() {
+            const container = document.getElementById('codeContainer');
+            const newItem = document.createElement('div');
+            newItem.className = 'code-section';
+            newItem.innerHTML = `
+                <div class="code-header">
+                    <span class="language editable" contenteditable="true" data-field="language">Python</span>
+                    <span class="project-name editable" contenteditable="true" data-field="projectName">New Project</span>
+                </div>
+                <div class="code-block">
+                    <pre class="editable" contenteditable="true" data-field="codeSnippet"># Your code here
+def example_function():
+    return "Hello World"</pre>
+                </div>
+                <div class="code-description">
+                    <p class="editable" contenteditable="true" data-field="codeDescription">Description of what this code does and its purpose in the project.</p>
+                </div>
+            `;
+            
+            container.appendChild(newItem);
+            setupAutoSaveForElement(newItem);
+            saveData();
+            showNotification('Code section added successfully');
+        }
+        
+        function addProject() {
+            const container = document.getElementById('projectsContainer');
+            const newItem = document.createElement('div');
+            newItem.className = 'project-item';
+            newItem.innerHTML = `
+                <div class="project-header">
+                    <div class="project-name editable" contenteditable="true" data-field="projectTitle">New Project</div>
+                    <div class="project-duration editable" contenteditable="true" data-field="projectDuration">2024</div>
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag editable" contenteditable="true" data-field="techTag">Technology</span>
+                    <span class="tech-tag editable" contenteditable="true" data-field="techTag">Framework</span>
+                </div>
+                <div class="project-description">
+                    <p class="editable" contenteditable="true" data-field="projectDesc">Brief description of the project and its key features.</p>
+                    <ul class="project-features">
+                        <li class="editable" contenteditable="true" data-field="feature">Key feature 1</li>
+                        <li class="editable" contenteditable="true" data-field="feature">Key feature 2</li>
+                    </ul>
+                </div>
+            `;
+            
+            container.appendChild(newItem);
+            setupAutoSaveForElement(newItem);
+            saveData();
+            showNotification('Project added successfully');
+        }
+        
+        // Export Functions
+        function exportToPDF() {
+            showLoading('Generating PDF...');
+            
+            setTimeout(() => {
+                try {
+                    const { jsPDF } = window.jspdf;
+                    const resumeContainer = document.getElementById('resumeContainer');
+                    
+                    html2canvas(resumeContainer, {
+                        scale: 2,
+                        useCORS: true,
+                        allowTaint: true,
+                        backgroundColor: '#ffffff'
+                    }).then(canvas => {
+                        const imgData = canvas.toDataURL('image/png');
+                        const pdf = new jsPDF();
+                        
+                        const imgWidth = 210;
+                        const pageHeight = 295;
+                        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                        let heightLeft = imgHeight;
+                        
+                        let position = 0;
+                        
+                        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                        heightLeft -= pageHeight;
+                        
+                        while (heightLeft >= 0) {
+                            position = heightLeft - imgHeight;
+                            pdf.addPage();
+                            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                            heightLeft -= pageHeight;
+                        }
+                        
+                        pdf.save('resume.pdf');
+                        hideLoading();
+                        showNotification('PDF exported successfully');
+                    }).catch(error => {
+                        console.error('PDF export error:', error);
+                        hideLoading();
+                        showNotification('Error exporting PDF', true);
+                    });
+                } catch (error) {
+                    console.error('PDF export error:', error);
+                    hideLoading();
+                    showNotification('Error exporting PDF', true);
+                }
+            }, 100);
+        }
+        
+        function exportToImage() {
+            showLoading('Generating Image...');
+            
+            setTimeout(() => {
+                try {
+                    const resumeContainer = document.getElementById('resumeContainer');
+                    
+                    html2canvas(resumeContainer, {
+                        scale: 2,
+                        useCORS: true,
+                        allowTaint: true,
+                        backgroundColor: '#ffffff'
+                    }).then(canvas => {
+                        const link = document.createElement('a');
+                        link.download = 'resume.png';
+                        link.href = canvas.toDataURL('image/png');
+                        link.click();
+                        
+                        hideLoading();
+                        showNotification('Image exported successfully');
+                    }).catch(error => {
+                        console.error('Image export error:', error);
+                        hideLoading();
+                        showNotification('Error exporting image', true);
+                    });
+                } catch (error) {
+                    console.error('Image export error:', error);
+                    hideLoading();
+                    showNotification('Error exporting image', true);
+                }
+            }, 100);
+        }
+        
+        // Utility Functions
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
+                localStorage.removeItem('newCleanResumeData');
+                location.reload();
+            }
+        }
+        
+        function showLoading(message) {
+            const loading = document.createElement('div');
+            loading.id = 'loadingOverlay';
+            loading.className = 'loading';
+            loading.innerHTML = `
+                <div>
+                    <i class="fas fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 10px;"></i>
+                    <div>${message}</div>
+                </div>
+            `;
+            document.body.appendChild(loading);
+        }
+        
+        function hideLoading() {
+            const loading = document.getElementById('loadingOverlay');
+            if (loading) {
+                loading.remove();
+            }
+        }
+        
+        function showNotification(message, isError = false) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${isError ? 'error' : ''}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
